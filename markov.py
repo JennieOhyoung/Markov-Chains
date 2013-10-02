@@ -2,16 +2,18 @@
 
 from sys import argv
 import random
-import string
 
-script, text = argv
-f = open(text).read().lower()
-corpus = f.replace(",", "").replace(".", "").replace("?", "")
+
    
 
-def make_chains(corpus):
+def make_chains(argv):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
+    text = argv
+    f = open(text).read().lower()
+    corpus = f.replace(",", "").replace(".", "").replace("?", "")
+
+
     chains_dict = {}
     words = corpus.split()
     
@@ -48,21 +50,18 @@ def make_text(chains):
             break
 
     sentence = " ".join(sentence_list).capitalize()
-    print sentence
+    return sentence
 
 
 
 def main():
-    #args = sys.argv
 
     # Change this to read input_text from a file
-    input_text = "Some text"
+    input_text = "test.txt"
 
     chain_dict = make_chains(input_text)
     random_text = make_text(chain_dict)
     print random_text
 
-# if __name__ == "__main__":
-    # main()
-
-make_text(make_chains(corpus))
+if __name__ == "__main__":
+    main()
