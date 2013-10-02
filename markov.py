@@ -1,9 +1,6 @@
-
-from sys import argv
+#from sys import argv
 import random
-
-
-   
+import twitter
 
 def make_chains(text):
     """Takes an input text as a string and returns a dictionary of
@@ -49,6 +46,13 @@ def make_text(chains):
     sentence = " ".join(sentence_list).capitalize()
     return sentence
 
+def twitter_posts(text):
+    api = twitter.Api(consumer_key='consumer_key',
+    consumer_secret='consumer_secret', access_token_key='access_token_key', 
+    access_token_secret='access_token_secret')
+
+    status = api.PostUpdate(text)
+    print status.text
 
 
 def main():
@@ -58,7 +62,7 @@ def main():
 
     chain_dict = make_chains(input_text)
     random_text = make_text(chain_dict)
-    print random_text
+    twitter_posts(random_text)
 
 if __name__ == "__main__":
     main()
