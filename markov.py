@@ -32,38 +32,23 @@ def make_chains(corpus):
 def make_text(chains):
     """Takes a dictionary of markov chains and returns random text
     based off an original text."""
-    sentence_list = []
+
     # randomly select a dictionary entry to start with
 
-    rand_key = random.choice(chains.keys())
-    start_sentence = " ".join(rand_key)
-    print start_sentence
-    # randomly select one of the values for the tuple 
-    rand_val = random.choice(chains[rand_key])
-    print rand_val
-
-    sentence_list.append(start_sentence).capitalize()
-    sentence_list.append(rand_val)
-
-
-
-    # loop:
-        # take the key's second tuple along with a randomly selected entry value
-        # search for a key tuple that matches
-
-    sec_tuple = rand_key[1]
-    search_tuple = (sec_tuple, rand_val)
-    print search_tuple
-    print random.choice(chains[search_tuple])
-
-
-
-    # turn into text
-    # return text string
-
+    search_tuple = random.choice(chains.keys())
+    sentence_list = [search_tuple[0], search_tuple[1]]
     
+    #loop goes here
+    
+    while len(" ".join(sentence_list)) <= 80:
+        rand_val = random.choice(chains[search_tuple])
+        sentence_list.append(rand_val)
+        search_tuple = (search_tuple[1], rand_val)
+        if not chains.get(search_tuple):
+            break
 
-
+    sentence = " ".join(sentence_list).capitalize()
+    print sentence
 
 
 
