@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 from sys import argv
 import random
@@ -6,12 +5,11 @@ import random
 
    
 
-def make_chains(argv):
+def make_chains(text):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
-    text = argv
-    f = open(text).read().lower()
-    corpus = f.replace(",", "").replace(".", "").replace("?", "")
+    f = open(text).read()
+    corpus = f.replace("\"", "").replace(";", "")
 
 
     chains_dict = {}
@@ -21,11 +19,10 @@ def make_chains(argv):
     # if true, then append 0th position as tup0 in dict, 1st position as tup1, 2nd as value
     # else: break
 
-    for pos in range(len(words)-1):
-        if pos != len(words) -2:
-            key = (words[pos], words[pos + 1])
-            chains_dict[key] = chains_dict.get(key, [])
-            chains_dict[key].append(words[pos + 2]) 
+    for pos in range(len(words)-2):                     
+        key = (words[pos], words[pos + 1])  
+        chains_dict[key] = chains_dict.get(key, [])
+        chains_dict[key].append(words[pos + 2]) 
 
     #print chains_dict
     return chains_dict
@@ -42,7 +39,7 @@ def make_text(chains):
     
     #loop goes here
     
-    while len(" ".join(sentence_list)) <= 80:
+    while len(" ".join(sentence_list)) < 130:
         rand_val = random.choice(chains[search_tuple])
         sentence_list.append(rand_val)
         search_tuple = (search_tuple[1], rand_val)
@@ -57,7 +54,7 @@ def make_text(chains):
 def main():
 
     # Change this to read input_text from a file
-    input_text = "test.txt"
+    input_text = "dante.txt"
 
     chain_dict = make_chains(input_text)
     random_text = make_text(chain_dict)
